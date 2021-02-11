@@ -5,16 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7dca983-4c90-400c-88a7-f2f2d63bde2f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../cordapp-example/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../cordapp-example/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cordapp-example/clients/src/main/kotlin/com/example/server/MainController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../cordapp-example/clients/src/main/kotlin/com/example/server/MainController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clients/src/main/kotlin/net/corda/samples/example/Client.kt" beforeDir="false" afterPath="$PROJECT_DIR$/clients/src/main/kotlin/net/corda/samples/example/Client.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="DefaultGradleProjectSettings">
-    <option name="isMigrated" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -27,12 +23,44 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/clients">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/workflows">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="cordapp-example-new" type="f1a62948:ProjectNode" />
+                <item name="cordapp-example" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cordapp-example" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cordapp-example" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="cordformation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cordapp-example" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cordapp-example" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cordapp-example" type="f1a62948:ProjectNode" />
+                <item name="clients" type="2d1252cf:ModuleNode" />
               </path>
             </expand>
             <select />
@@ -41,15 +69,26 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Object" />
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="SET_USER_NAME_GLOBALLY" value="false" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
-      </MavenGeneralSettings>
-    </option>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1lz4lWv4H22IlHPKK2iwpzrMZW7" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -59,53 +98,26 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/clients/src/main/kotlin/net/corda/samples/example" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="show.unlinked.gradle.project.popup" value="true" />
   </component>
-  <component name="RunManager" selected="Gradle.IOUFlowTests">
-    <configuration name="ContractTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/clients/src/main/kotlin/net/corda/samples/example" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="net.corda.samples.example.flows" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.cordapp-example [runTestClient]">
+    <configuration name="SerDeTests" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;net.corda.samples.example.contracts.ContractTests&quot;" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":contracts:test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="DriverBasedTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;net.corda.samples.example.DriverBasedTest&quot;" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":workflows:integrationTest" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="IOUFlowTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;net.corda.samples.example.IOUFlowTests&quot;" />
+        <option name="scriptParameters" value="--tests &quot;net.corda.samples.example.SerDeTests&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -114,36 +126,133 @@
             <option value=":workflows:test" />
           </list>
         </option>
-        <option name="vmOptions" />
+        <option name="vmOptions" value="" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="StateTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="cordapp-example [deployNodes]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;net.corda.samples.example.contracts.StateTests&quot;" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":contracts:test" />
+            <option value="deployNodes" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="cordapp-example [runPartyAServer]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="runPartyAServer" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="cordapp-example [runTestClient]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="runTestClient" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="cordapp-example:clients [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/clients" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="cordapp-example:workflows [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/workflows" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.SerDeTests" />
+      <item itemvalue="Gradle.cordapp-example [runPartyAServer]" />
+      <item itemvalue="Gradle.cordapp-example [runTestClient]" />
+      <item itemvalue="Gradle.cordapp-example:clients [build]" />
+      <item itemvalue="Gradle.cordapp-example:workflows [build]" />
+      <item itemvalue="Gradle.cordapp-example [deployNodes]" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.IOUFlowTests" />
-        <item itemvalue="Gradle.DriverBasedTest" />
-        <item itemvalue="Gradle.ContractTests" />
-        <item itemvalue="Gradle.StateTests" />
+        <item itemvalue="Gradle.cordapp-example [runTestClient]" />
+        <item itemvalue="Gradle.cordapp-example [deployNodes]" />
+        <item itemvalue="Gradle.cordapp-example:workflows [build]" />
+        <item itemvalue="Gradle.cordapp-example:clients [build]" />
+        <item itemvalue="Gradle.cordapp-example [runPartyAServer]" />
       </list>
     </recent_temporary>
   </component>
@@ -156,28 +265,48 @@
       <option name="presentableId" value="Default" />
       <updated>1608586738487</updated>
     </task>
+    <task id="LOCAL-00001" summary="checkpoint - exampleflow dynamic invocation works via reflection">
+      <created>1613076863544</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1613076863545</updated>
+    </task>
+    <task id="LOCAL-00002" summary="checkpoint - exampleflow dynamic invocation works via reflection">
+      <created>1613097902814</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1613097902814</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
-  <component name="WindowStateProjectService">
-    <state width="1521" height="278" key="GridCell.Tab.0.bottom" timestamp="1608593370371">
-      <screen x="1920" y="23" width="1920" height="1057" />
-    </state>
-    <state width="1521" height="278" key="GridCell.Tab.0.bottom/0.23.1920.979/1920.23.1920.1057/-1680.23.1680.1027@1920.23.1920.1057" timestamp="1608593370371" />
-    <state width="1521" height="278" key="GridCell.Tab.0.center" timestamp="1608593370370">
-      <screen x="1920" y="23" width="1920" height="1057" />
-    </state>
-    <state width="1521" height="278" key="GridCell.Tab.0.center/0.23.1920.979/1920.23.1920.1057/-1680.23.1680.1027@1920.23.1920.1057" timestamp="1608593370370" />
-    <state width="1521" height="278" key="GridCell.Tab.0.left" timestamp="1608593370369">
-      <screen x="1920" y="23" width="1920" height="1057" />
-    </state>
-    <state width="1521" height="278" key="GridCell.Tab.0.left/0.23.1920.979/1920.23.1920.1057/-1680.23.1680.1027@1920.23.1920.1057" timestamp="1608593370369" />
-    <state width="1521" height="278" key="GridCell.Tab.0.right" timestamp="1608593370370">
-      <screen x="1920" y="23" width="1920" height="1057" />
-    </state>
-    <state width="1521" height="278" key="GridCell.Tab.0.right/0.23.1920.979/1920.23.1920.1057/-1680.23.1680.1027@1920.23.1920.1057" timestamp="1608593370370" />
-    <state x="2671" y="288" width="586" height="490" key="find.popup" timestamp="1608591473495">
-      <screen x="1920" y="23" width="1920" height="1057" />
-    </state>
-    <state x="2671" y="288" width="586" height="490" key="find.popup/0.23.1920.979/1920.23.1920.1057/-1680.23.1680.1027@1920.23.1920.1057" timestamp="1608591473495" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="checkpoint - exampleflow dynamic invocation works via reflection" />
+    <option name="LAST_COMMIT_MESSAGE" value="checkpoint - exampleflow dynamic invocation works via reflection" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/clients/src/main/kotlin/net/corda/samples/example/Client.kt</url>
+          <line>306</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
