@@ -280,7 +280,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613097902814</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="checkpoint #2">
+      <created>1613101145977</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1613101145977</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -297,20 +304,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="checkpoint - exampleflow dynamic invocation works via reflection" />
-    <option name="LAST_COMMIT_MESSAGE" value="checkpoint - exampleflow dynamic invocation works via reflection" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/clients/src/main/kotlin/net/corda/samples/example/Client.kt</url>
-          <line>162</line>
-          <properties>
-            <option name="lambda-ordinal" value="0" />
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="checkpoint #2" />
+    <option name="LAST_COMMIT_MESSAGE" value="checkpoint #2" />
   </component>
 </project>

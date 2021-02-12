@@ -9,11 +9,13 @@ import net.corda.core.identity.Party
 import net.corda.core.transactions.SignedTransaction
 import net.corda.core.utilities.NetworkHostAndPort.Companion.parse
 import net.corda.core.utilities.loggerFor
+import net.corda.samples.example.flows.DummyFlow
 import net.corda.samples.example.flows.ExampleFlow
 import org.hyperledger.cactus.plugin.ledger.connector.corda.server.model.*
 import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
 import java.lang.RuntimeException
+import java.math.BigDecimal
 import java.security.PublicKey
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -160,7 +162,6 @@ private class Client {
 
         val nodeB = nodes.single { n -> n.legalIdentities.any { li -> li.name.organisation.contains("PartyB")}}
         val partyB = nodeB.legalIdentities.first()
-//        val partyA = proxy.nodeInfo().legalIdentities.single { p -> p.name.organisation.contains("PartyA")}
 
         try {
             val algorithm = JvmObject(
@@ -263,15 +264,35 @@ private class Client {
             throw ex
         }
 
-//        try {
-//            val classFlowLogic = ExampleFlow.Initiator::class.java
-//            val params = listOf(42, party).toTypedArray()
-//            logger.info("params={}", params)
-//            val flowOut = proxy.startFlowDynamic(classFlowLogic, *params)
-//            logger.info("flowOut={}", flowOut)
-//        } catch (ex: Throwable) {
-//            throw ex
-//        }
+        try {
+            val req = InvokeContractV1Request(
+                signingCredential = "fake-signing-credential",
+                flowFullClassName = DummyFlow::class.java.name,
+                params = listOf(
+                    JvmObject(
+                        JvmTypeKind.pRIMITIVE,
+                        JvmType(
+                            fqClassName = Integer::class.java.name,
+                            typeParameters = emptyList()
+                        ),
+                        primitiveValue = 42
+                    )
+                ),
+                cordappName = "fake-cordapp-name",
+                timeoutMs = BigDecimal.valueOf(60000)
+            )
+
+            @Suppress("UNCHECKED_CAST")
+            val flowLogicClass = Class.forName(req.flowFullClassName) as Class<out FlowLogic<*>>
+            val params = req.params.map { p -> instantiate(p) }.toTypedArray()
+            logger.info("params={}", params)
+            val flowHandle = proxy.startFlowDynamic(flowLogicClass, *params)
+            val timeoutMs: Long = req.timeoutMs?.toLong() ?: 60000
+            val flowOut = flowHandle.returnValue.get(timeoutMs, TimeUnit.MILLISECONDS)
+            logger.info("flowOut={}", flowOut)
+        } catch (ex: Throwable) {
+            throw ex
+        }
 
         //Close the client connection
         clientConnection.close()
