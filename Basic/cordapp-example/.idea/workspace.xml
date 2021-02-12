@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7dca983-4c90-400c-88a7-f2f2d63bde2f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clients/src/main/kotlin/net/corda/samples/example/Client.kt" beforeDir="false" afterPath="$PROJECT_DIR$/clients/src/main/kotlin/net/corda/samples/example/Client.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -303,8 +304,11 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/clients/src/main/kotlin/net/corda/samples/example/Client.kt</url>
-          <line>306</line>
-          <option name="timeStamp" value="4" />
+          <line>162</line>
+          <properties>
+            <option name="lambda-ordinal" value="0" />
+          </properties>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
