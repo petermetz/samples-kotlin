@@ -1,20 +1,19 @@
 package net.corda.samples.example
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
 import net.corda.client.rpc.CordaRPCClient
 import net.corda.core.flows.FlowLogic
 import net.corda.core.identity.CordaX500Name
 import net.corda.core.identity.Party
-import net.corda.core.transactions.SignedTransaction
 import net.corda.core.utilities.NetworkHostAndPort.Companion.parse
 import net.corda.core.utilities.loggerFor
-import net.corda.samples.example.flows.DummyFlow
-import net.corda.samples.example.flows.ExampleFlow
+import net.corda.samples.example.flows.*
 import org.hyperledger.cactus.plugin.ledger.connector.corda.server.model.*
+import org.hyperledger.cactus.plugin.ledger.connector.corda.server.serialization.collections.ConstructableArrayList
 import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
 import java.lang.RuntimeException
+import java.lang.reflect.Constructor
 import java.math.BigDecimal
 import java.security.PublicKey
 import java.util.*
@@ -71,12 +70,22 @@ private class Client {
 
         // If something is missing from here that's because they also missed at in the documentation:
         // https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html
-        val exoticJvmTypes: Map<String, Class<*>> = mapOf(
+        val exoticTypes: Map<String, Class<*>> = mapOf(
+
+            "byte" to Byte::class.java,
+            "char" to Char::class.java,
+            "int" to Int::class.java,
+            "short" to Short::class.java,
+            "long" to Long::class.java,
+            "float" to Float::class.java,
+            "double" to Double::class.java,
+            "boolean" to Boolean::class.java,
+
             "byte[]" to ByteArray::class.java,
+            "char[]" to CharArray::class.java,
             "int[]" to IntArray::class.java,
             "short[]" to ShortArray::class.java,
             "long[]" to LongArray::class.java,
-            "char[]" to CharArray::class.java,
             "float[]" to FloatArray::class.java,
             "double[]" to DoubleArray::class.java,
             "boolean[]" to BooleanArray::class.java
@@ -86,8 +95,8 @@ private class Client {
     fun getOrInferType(jvmObject: JvmObject): Class<*> {
         Objects.requireNonNull(jvmObject, "jvmObject must not be null for its type to be inferred.")
 
-        return if (exoticJvmTypes.containsKey(jvmObject.jvmType.fqClassName)) {
-            exoticJvmTypes.getOrElse(
+        return if (exoticTypes.containsKey(jvmObject.jvmType.fqClassName)) {
+            exoticTypes.getOrElse(
                 jvmObject.jvmType.fqClassName,
                 { throw IllegalStateException("Could not locate Class<*> for ${jvmObject.jvmType.fqClassName} Exotic JVM types map must have been modified on a concurrent threat.") })
         } else {
@@ -110,25 +119,40 @@ private class Client {
             if (jvmObject.jvmCtorArgs == null) {
                 throw IllegalArgumentException("jvmObject.jvmCtorArgs cannot be null when jvmObject.jvmTypeKind == JvmTypeKind.rEFERENCE")
             }
-            if (jvmObject.jvmType.typeParameters.isEmpty()) {
-                val ctorArgs = jvmObject.jvmCtorArgs.map { x -> instantiate(x) }.toTypedArray()
-                val ctorArgTypes: List<Class<*>> = jvmObject.jvmCtorArgs.map { x -> getOrInferType(x) }
-                val ctor = clazz.constructors.filterNotNull()
-                    .filter { c -> c.parameterCount == ctorArgTypes.size }
+            val constructorArgs: Array<Any?> = jvmObject.jvmCtorArgs.map { x -> instantiate(x) }.toTypedArray()
+
+            if (List::class.java.isAssignableFrom(clazz)) {
+                return listOf(*constructorArgs)
+            } else if (Array<Any>::class.java.isAssignableFrom(clazz)) {
+                // TODO verify that this actually works and also
+                // if we need it at all since we already have lists covered
+                return arrayOf(*constructorArgs)
+            }
+            val constructorArgTypes: List<Class<*>> = jvmObject.jvmCtorArgs.map { x -> getOrInferType(x) }
+            val constructor: Constructor<*>
+            try {
+                constructor = clazz.constructors
+                    .filter { c -> c.parameterCount == constructorArgTypes.size }
                     .single { c ->
                         c.parameterTypes
-                            .mapIndexed { index, clazz -> clazz.isAssignableFrom(ctorArgTypes[index]) }
+                            .mapIndexed { index, clazz -> clazz.isAssignableFrom(constructorArgTypes[index]) }
                             .all { x -> x }
                     }
-                val instance = ctor.newInstance(*ctorArgs)
-                logger.info("Instantiated rEFERENCE OK {}", instance)
-                return instance
-            } else {
-                throw RuntimeException("Oops, did not implement generic instantiation just yet. Stay tuned...")
+            } catch (ex: NoSuchElementException) {
+                val argTypes = jvmObject.jvmCtorArgs
+                    .map { x -> x.jvmType.fqClassName }
+                    .joinToString(",")
+                val className = jvmObject.jvmType.fqClassName
+                throw RuntimeException("Cannot find matching constructor ${className}(${argTypes})")
             }
 
+            logger.info("Constructor=${constructor}")
+            constructorArgs.forEachIndexed { index, it -> logger.info("Constructor ARGS: #${index} -> ${it}") }
+            val instance = constructor.newInstance(*constructorArgs)
+            logger.info("Instantiated REFERENCE OK {}", instance)
+            return instance
         } else if (jvmObject.jvmTypeKind == JvmTypeKind.pRIMITIVE) {
-            logger.info("Instantiated pRIMITIVE OK {}", jvmObject.primitiveValue)
+            logger.info("Instantiated PRIMITIVE OK {}", jvmObject.primitiveValue)
             return jvmObject.primitiveValue
         } else {
             throw IllegalArgumentException("Unknown jvmObject.jvmTypeKind (${jvmObject.jvmTypeKind})")
@@ -158,9 +182,12 @@ private class Client {
 
         // Example #3 We invoke a flow dynamically from the HTTP request
 
-        val partyA = proxy.nodeInfo().legalIdentities.single { p -> p.name.organisation.contains("PartyA")}
+        val partyA = proxy.nodeInfo().legalIdentities.single { p -> p.name.organisation.contains("PartyA") }
 
-        val nodeB = nodes.single { n -> n.legalIdentities.any { li -> li.name.organisation.contains("PartyB")}}
+        val mapper = ObjectMapper()
+        val writer = mapper.writerWithDefaultPrettyPrinter()
+
+        val nodeB = nodes.single { n -> n.legalIdentities.any { li -> li.name.organisation.contains("PartyB") } }
         val partyB = nodeB.legalIdentities.first()
 
         try {
@@ -245,6 +272,7 @@ private class Client {
                     )
                 )
             )
+            logger.info("Req1={}", writer.writeValueAsString(req))
 
             @Suppress("UNCHECKED_CAST")
             val classFlowLogic = Class.forName(req.flowFullClassName) as Class<out FlowLogic<*>>
@@ -256,7 +284,6 @@ private class Client {
             val flowOut = flowHandle.returnValue.get(timeoutMs, TimeUnit.MILLISECONDS)
             logger.info("flowOut={}", flowOut)
 //            val res = InvokeContractV1Response(callOutput = mapOf("result" to flowOut!!))
-//            val mapper = ObjectMapper()
 //            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
 //            val json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(res)
 //            logger.info("Response JSON = {}", json);
@@ -281,6 +308,111 @@ private class Client {
                 cordappName = "fake-cordapp-name",
                 timeoutMs = BigDecimal.valueOf(60000)
             )
+            logger.info("Req2={}", writer.writeValueAsString(req))
+
+            @Suppress("UNCHECKED_CAST")
+            val flowLogicClass = Class.forName(req.flowFullClassName) as Class<out FlowLogic<*>>
+            val params = req.params.map { p -> instantiate(p) }.toTypedArray()
+            logger.info("params={}", params)
+            val flowHandle = proxy.startFlowDynamic(flowLogicClass, *params)
+            val timeoutMs: Long = req.timeoutMs?.toLong() ?: 60000
+            val flowOut = flowHandle.returnValue.get(timeoutMs, TimeUnit.MILLISECONDS)
+            logger.info("flowOut={}", flowOut)
+        } catch (ex: Throwable) {
+            throw ex
+        }
+
+        try {
+            val req = InvokeContractV1Request(
+                signingCredential = "fake-signing-credential",
+                flowFullClassName = MultipleNestedGenericsFlow::class.java.name,
+                params = listOf(
+                    JvmObject(
+                        JvmTypeKind.rEFERENCE,
+                        JvmType(
+                            fqClassName = Tractor::class.java.name,
+                            typeParameters = emptyList()
+                        ),
+                        jvmCtorArgs = listOf(
+                            JvmObject(
+                                JvmTypeKind.pRIMITIVE,
+                                JvmType(fqClassName = String::class.java.name, typeParameters = emptyList()),
+                                primitiveValue = "MyCoolTractor12345"
+                            ),
+                            JvmObject(
+                                jvmTypeKind = JvmTypeKind.rEFERENCE,
+                                jvmType = JvmType(
+                                    fqClassName = ConstructableArrayList::class.java.name,
+                                    typeParameters = listOf(
+                                        JvmType(
+                                            fqClassName = SolidWheel::class.java.name,
+                                            typeParameters = listOf(
+                                                JvmType(
+                                                    fqClassName = TitaniumRim::class.java.name,
+                                                    typeParameters = emptyList()
+                                                )
+                                            )
+                                        )
+                                    )
+                                ),
+                                jvmCtorArgs = listOf(
+                                    JvmObject(
+                                        jvmTypeKind = JvmTypeKind.rEFERENCE,
+                                        jvmType = JvmType(
+                                            fqClassName = SolidWheel::class.java.name,
+                                            typeParameters = listOf(
+                                                JvmType(
+                                                    fqClassName = TitaniumRim::class.java.name,
+                                                    typeParameters = emptyList()
+                                                )
+                                            )
+                                        ),
+                                        jvmCtorArgs = listOf(
+                                            JvmObject(
+                                                jvmTypeKind = JvmTypeKind.rEFERENCE,
+                                                jvmType = JvmType(
+                                                    fqClassName = TitaniumRim::class.java.name,
+                                                    typeParameters = emptyList()
+                                                ),
+                                                jvmCtorArgs = listOf(
+                                                    JvmObject(
+                                                        jvmTypeKind = JvmTypeKind.pRIMITIVE,
+                                                        primitiveValue = "Blue",
+                                                        jvmType = JvmType(
+                                                            fqClassName = String::class.java.name,
+                                                            typeParameters = emptyList()
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            JvmObject(
+                                jvmTypeKind = JvmTypeKind.rEFERENCE,
+                                jvmType = JvmType(
+                                    fqClassName = CombustionEngine::class.java.name,
+                                    typeParameters = emptyList()
+                                ),
+                                jvmCtorArgs = listOf(
+                                    JvmObject(
+                                        jvmTypeKind = JvmTypeKind.pRIMITIVE,
+                                        jvmType = JvmType(
+                                            fqClassName = Int::class.java.name,
+                                            typeParameters = emptyList()
+                                        ),
+                                        primitiveValue = 500000 // very strong tractor engine
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                cordappName = "fake-cordapp-name",
+                timeoutMs = BigDecimal.valueOf(60000)
+            )
+            logger.info("Req3={}", writer.writeValueAsString(req))
 
             @Suppress("UNCHECKED_CAST")
             val flowLogicClass = Class.forName(req.flowFullClassName) as Class<out FlowLogic<*>>
