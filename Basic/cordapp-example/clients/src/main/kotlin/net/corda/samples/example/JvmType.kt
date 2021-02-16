@@ -14,17 +14,12 @@ import javax.validation.Valid
 /**
  * Represents a reference to a JVM type (such as a Java class)
  * @param fqClassName 
- * @param typeParameters 
  */
 data class JvmType(
 
     @get:NotNull  
     @get:Size(min=1,max=65535)
-    @field:JsonProperty("fqClassName") val fqClassName: kotlin.String,
-
-    @get:NotNull  
-    @field:Valid
-    @field:JsonProperty("typeParameters") val typeParameters: kotlin.collections.List<JvmType>
+    @field:JsonProperty("fqClassName") val fqClassName: kotlin.String
 ) {
 
 }

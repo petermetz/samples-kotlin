@@ -195,8 +195,7 @@ private class Client {
                 jvmTypeKind = JvmTypeKind.pRIMITIVE,
                 primitiveValue = partyB.owningKey.algorithm,
                 jvmType = JvmType(
-                    fqClassName = java.lang.String::class.java.name,
-                    typeParameters = emptyList()
+                    fqClassName = java.lang.String::class.java.name
                 )
             )
 
@@ -204,8 +203,7 @@ private class Client {
                 jvmTypeKind = JvmTypeKind.pRIMITIVE,
                 primitiveValue = partyB.owningKey.format,
                 jvmType = JvmType(
-                    fqClassName = java.lang.String::class.java.name,
-                    typeParameters = emptyList()
+                    fqClassName = java.lang.String::class.java.name
                 )
             )
 
@@ -213,43 +211,39 @@ private class Client {
                 jvmTypeKind = JvmTypeKind.pRIMITIVE,
                 primitiveValue = partyB.owningKey.encoded,
                 jvmType = JvmType(
-                    fqClassName = kotlin.ByteArray::class.java.name,
-                    typeParameters = emptyList()
+                    fqClassName = kotlin.ByteArray::class.java.name
                 )
             )
 
             val publicKey = JvmObject(
                 jvmTypeKind = JvmTypeKind.rEFERENCE,
                 jvmCtorArgs = listOf(algorithm, format, encoded),
-                jvmType = JvmType(fqClassName = PublicKeyImpl::class.java.name, typeParameters = emptyList())
+                jvmType = JvmType(fqClassName = PublicKeyImpl::class.java.name)
             )
 
             val cordaX500Name = JvmObject(
                 jvmTypeKind = JvmTypeKind.rEFERENCE,
-                jvmType = JvmType(fqClassName = CordaX500Name::class.java.name, typeParameters = emptyList()),
+                jvmType = JvmType(fqClassName = CordaX500Name::class.java.name),
                 jvmCtorArgs = listOf(
                     JvmObject(
                         jvmTypeKind = JvmTypeKind.pRIMITIVE,
                         primitiveValue = partyB.name.organisation,
                         jvmType = JvmType(
-                            fqClassName = java.lang.String::class.java.name,
-                            typeParameters = emptyList()
+                            fqClassName = java.lang.String::class.java.name
                         )
                     ),
                     JvmObject(
                         jvmTypeKind = JvmTypeKind.pRIMITIVE,
                         primitiveValue = partyB.name.locality,
                         jvmType = JvmType(
-                            fqClassName = java.lang.String::class.java.name,
-                            typeParameters = emptyList()
+                            fqClassName = java.lang.String::class.java.name
                         )
                     ),
                     JvmObject(
                         jvmTypeKind = JvmTypeKind.pRIMITIVE,
                         primitiveValue = partyB.name.country,
                         jvmType = JvmType(
-                            fqClassName = java.lang.String::class.java.name,
-                            typeParameters = emptyList()
+                            fqClassName = java.lang.String::class.java.name
                         )
                     )
                 )
@@ -263,12 +257,12 @@ private class Client {
                     JvmObject(
                         JvmTypeKind.pRIMITIVE,
                         primitiveValue = 42,
-                        jvmType = JvmType(fqClassName = Integer::class.java.name, typeParameters = emptyList())
+                        jvmType = JvmType(fqClassName = Integer::class.java.name)
                     ),
                     JvmObject(
                         JvmTypeKind.rEFERENCE,
                         jvmCtorArgs = listOf(cordaX500Name, publicKey),
-                        jvmType = JvmType(fqClassName = Party::class.java.name, typeParameters = emptyList())
+                        jvmType = JvmType(fqClassName = Party::class.java.name)
                     )
                 )
             )
@@ -299,8 +293,7 @@ private class Client {
                     JvmObject(
                         JvmTypeKind.pRIMITIVE,
                         JvmType(
-                            fqClassName = Integer::class.java.name,
-                            typeParameters = emptyList()
+                            fqClassName = Integer::class.java.name
                         ),
                         primitiveValue = 42
                     )
@@ -330,57 +323,35 @@ private class Client {
                     JvmObject(
                         JvmTypeKind.rEFERENCE,
                         JvmType(
-                            fqClassName = Tractor::class.java.name,
-                            typeParameters = emptyList()
+                            fqClassName = Tractor::class.java.name
                         ),
                         jvmCtorArgs = listOf(
                             JvmObject(
                                 JvmTypeKind.pRIMITIVE,
-                                JvmType(fqClassName = String::class.java.name, typeParameters = emptyList()),
+                                JvmType(fqClassName = String::class.java.name),
                                 primitiveValue = "MyCoolTractor12345"
                             ),
                             JvmObject(
                                 jvmTypeKind = JvmTypeKind.rEFERENCE,
                                 jvmType = JvmType(
-                                    fqClassName = ConstructableArrayList::class.java.name,
-                                    typeParameters = listOf(
-                                        JvmType(
-                                            fqClassName = SolidWheel::class.java.name,
-                                            typeParameters = listOf(
-                                                JvmType(
-                                                    fqClassName = TitaniumRim::class.java.name,
-                                                    typeParameters = emptyList()
-                                                )
-                                            )
-                                        )
-                                    )
+                                    fqClassName = ConstructableArrayList::class.java.name
                                 ),
                                 jvmCtorArgs = listOf(
                                     JvmObject(
                                         jvmTypeKind = JvmTypeKind.rEFERENCE,
                                         jvmType = JvmType(
-                                            fqClassName = SolidWheel::class.java.name,
-                                            typeParameters = listOf(
-                                                JvmType(
-                                                    fqClassName = TitaniumRim::class.java.name,
-                                                    typeParameters = emptyList()
-                                                )
-                                            )
+                                            fqClassName = SolidWheel::class.java.name
                                         ),
                                         jvmCtorArgs = listOf(
                                             JvmObject(
                                                 jvmTypeKind = JvmTypeKind.rEFERENCE,
-                                                jvmType = JvmType(
-                                                    fqClassName = TitaniumRim::class.java.name,
-                                                    typeParameters = emptyList()
-                                                ),
+                                                jvmType = JvmType(fqClassName = TitaniumRim::class.java.name),
                                                 jvmCtorArgs = listOf(
                                                     JvmObject(
                                                         jvmTypeKind = JvmTypeKind.pRIMITIVE,
                                                         primitiveValue = "Blue",
                                                         jvmType = JvmType(
-                                                            fqClassName = String::class.java.name,
-                                                            typeParameters = emptyList()
+                                                            fqClassName = String::class.java.name
                                                         )
                                                     )
                                                 )
@@ -391,17 +362,11 @@ private class Client {
                             ),
                             JvmObject(
                                 jvmTypeKind = JvmTypeKind.rEFERENCE,
-                                jvmType = JvmType(
-                                    fqClassName = CombustionEngine::class.java.name,
-                                    typeParameters = emptyList()
-                                ),
+                                jvmType = JvmType(fqClassName = CombustionEngine::class.java.name),
                                 jvmCtorArgs = listOf(
                                     JvmObject(
                                         jvmTypeKind = JvmTypeKind.pRIMITIVE,
-                                        jvmType = JvmType(
-                                            fqClassName = Int::class.java.name,
-                                            typeParameters = emptyList()
-                                        ),
+                                        jvmType = JvmType(fqClassName = Int::class.java.name),
                                         primitiveValue = 500000 // very strong tractor engine
                                     )
                                 )
