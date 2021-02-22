@@ -23,6 +23,9 @@ dependencies {
     compile "org.apache.logging.log4j:log4j-slf4j-impl:${log4j_version}"
     compile "org.apache.logging.log4j:log4j-web:${log4j_version}"
     compile "org.slf4j:jul-to-slf4j:$slf4j_version"
+
+    implementation("org.xeustechnologies:jcl-core:2.8")
+    implementation("org.xeustechnologies:jcl-spring:2.8")
 }
 
 
@@ -37,7 +40,7 @@ springBoot {
 task runTestClient(type: JavaExec, dependsOn: assemble) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'net.corda.samples.example.ClientKt'
-    args 'localhost:10006', 'user1', 'test'
+    args 'localhost:10006', 'user1', 'test', 'localhost:10003', 'user1', 'test', 'localhost:10009', 'user1', 'test'
 }
 
 /* This task will start the springboot server that connects to your node (via RPC connection). All of the http requests

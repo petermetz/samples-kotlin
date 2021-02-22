@@ -13,13 +13,13 @@ import javax.validation.Valid
 
 /**
 * 
-* Values: pRIMITIVE,rEFERENCE
+* Values: PRIMITIVE,REFERENCE
 */
 enum class JvmTypeKind(val value: kotlin.String) {
 
-    pRIMITIVE("org.hyperledger.cactus.JvmTypeKind.PRIMITIVE"),
+    PRIMITIVE("org.hyperledger.cactus.JvmTypeKind.PRIMITIVE"),
 
-    rEFERENCE("org.hyperledger.cactus.JvmTypeKind.REFERENCE");
+    REFERENCE("org.hyperledger.cactus.JvmTypeKind.REFERENCE");
 
 }
 
