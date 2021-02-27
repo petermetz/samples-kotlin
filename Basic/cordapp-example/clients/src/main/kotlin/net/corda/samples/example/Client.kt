@@ -1,6 +1,7 @@
 package net.corda.samples.example
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 import net.corda.client.rpc.CordaRPCClient
 import net.corda.core.CordaRuntimeException
 import net.corda.core.flows.FlowLogic
@@ -228,11 +229,17 @@ private class Client {
 //        val proxyB = clientConnectionB.proxy
 //        logger.info("Connection to Node B established OK")
 
+        val mapper = ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
+        val writer = mapper.writerWithDefaultPrettyPrinter()
+
         // Interact with the node.
         // Example #1, here we print the nodes on the network.
-        val nodes = proxyA.networkMapSnapshot()
+        val networkMapSnapshot = proxyA.networkMapSnapshot()
         println("\n-- Here is the networkMap snapshot --")
-        logger.info("{}", nodes)
+        logger.info("networkMapSnapshot=\n{}", writer.writeValueAsString(networkMapSnapshot))
+
+        val nodeDiagnosticInfo = proxyA.nodeDiagnosticInfo()
+        logger.info("nodeDiagnosticInfo=\n{}", writer.writeValueAsString(nodeDiagnosticInfo))
 
         // Example #2, here we print the PartyB's node info
         val me = proxyA.nodeInfo().legalIdentities.first().name
@@ -240,9 +247,7 @@ private class Client {
         logger.info("{}", me)
 
         // Example #3 We invoke a flow dynamically from the HTTP request
-        val mapper = ObjectMapper()
-        val writer = mapper.writerWithDefaultPrettyPrinter()
-        val nodeA = nodes.single { n -> n.legalIdentities.any { li -> li.name.organisation.contains("PartyA") } }
+        val nodeA = networkMapSnapshot.single { n -> n.legalIdentities.any { li -> li.name.organisation.contains("PartyA") } }
         val partyA = nodeA.legalIdentities.first()
         val algorithmA = JvmObject(
             jvmTypeKind = JvmTypeKind.PRIMITIVE,
@@ -308,7 +313,7 @@ private class Client {
             jvmType = JvmType(fqClassName = Party::class.java.name)
         )
 
-        val nodeB = nodes.single { n -> n.legalIdentities.any { li -> li.name.organisation.contains("PartyB") } }
+        val nodeB = networkMapSnapshot.single { n -> n.legalIdentities.any { li -> li.name.organisation.contains("PartyB") } }
         val partyB = nodeB.legalIdentities.first()
         val algorithmB = JvmObject(
             jvmTypeKind = JvmTypeKind.PRIMITIVE,
@@ -389,7 +394,7 @@ private class Client {
                     partyBJvmObject
                 )
             )
-            logger.info("Req1={}", writer.writeValueAsString(req))
+            logger.info("Req::ExampleFlow.Initiator={}", writer.writeValueAsString(req))
 
             val flowOut = dynamicInvoke(proxyA, req)
             logger.info("flowOut1={}", flowOut)
@@ -613,6 +618,7 @@ private class Client {
                 throw ex
             }
 
+            logger.info("Req::JSON::FlowOut-Advanced-Obligation-IOUIssue\n{}", writer.writeValueAsString(req))
             val flowOut = dynamicInvoke(proxyA, req)
             logger.info("FlowOut-Advanced-Obligation-IOUIssue=${flowOut}")
         } catch (ex: Throwable) {
